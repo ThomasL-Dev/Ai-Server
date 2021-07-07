@@ -1,0 +1,152 @@
+:root{
+    --time-div-width: 40%;
+    --time-div-height: 80%;
+
+    --other-div-width: 35%;
+    --other-div-height: 40%;
+
+}
+
+.ss-img{
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    border-radius: 100px;
+    top: 15px;
+    left: 15px;
+
+    -moz-box-shadow:    0px 0px 10px 6px var(--col-second);
+  	-webkit-box-shadow: 0px 0px 10px 6px var(--col-second);
+  	box-shadow:         0px 0px 10px 6px var(--col-second);
+}
+.ss-img:hover{
+    -moz-box-shadow:    0px 0px 10px 6px var(--col-third);
+  	-webkit-box-shadow: 0px 0px 10px 6px var(--col-third);
+  	box-shadow:         0px 0px 10px 6px var(--col-third);
+}
+
+.div-screensaver{
+    position: absolute;
+    background-color: #0c0c0c;
+    border-radius: 15px;
+}
+
+
+
+
+
+
+
+
+
+.div-time{
+    top: 10%;
+    left: 8%;
+    width: var(--time-div-width);
+    height: var(--time-div-height);
+}
+
+#h{
+    width: fit-content;
+    margin: auto;
+    font-size: 10em;
+    color: var(--col-second);
+    margin-top: 20%;
+}
+
+#m{
+    width: fit-content;
+    margin: auto;
+    font-size: 8em;
+    margin-top: 5%;
+
+}
+
+#s{
+    width: fit-content;
+    margin: auto;
+    font-size: 1.5em;
+    color: var(--col-seven);
+    margin-top: 5%;
+}
+
+
+
+
+
+
+.div-date{
+    top: 7%;
+    left: 55%;
+    width: var(--other-div-width);
+    height: var(--other-div-height);
+    margin-bottom: 30px;
+}
+
+#date{
+    margin: auto;
+    width: fit-content;
+    margin-top: 20%;
+    font-size: 5em;
+    color: var(--col-second);
+
+}
+#month{
+    margin: auto;
+    width: fit-content;
+    margin-top: 12%;
+    font-size: 2em;
+}
+#year{
+    position: absolute;
+    top: 10px;
+    left: 30px;
+}
+
+
+
+
+
+
+
+.div-meteo{
+    top: 50%;
+    left: 55%;
+    width: var(--other-div-width);
+    height: var(--other-div-height);
+    margin-top: 30px;
+}
+
+#degree{
+    margin: auto;
+    width: fit-content;
+    margin-top: 20%;
+    font-size: 7em;
+    color: var(--col-second);
+
+}
+
+#weather{
+    margin: auto;
+    width: fit-content;
+    margin-top: 6%;
+    font-size: 2em;
+}
+
+#weather_img{
+    position: absolute;
+    top: 10px;
+    right: 30px;
+    width: 64px;
+}
+
+
+
+
+
+
+
+
+
+
+

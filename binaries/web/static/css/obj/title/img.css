@@ -1,0 +1,7 @@
+
+.ai-img-base-title{
+    width: 64px;
+
+    -webkit-animation: rotate-img 10s cubic-bezier(0.71,-0.32, 0.18, 1.42) infinite;
+	        animation: rotate-img 10s cubic-bezier(0.71,-0.32, 0.18, 1.42) infinite;
+}

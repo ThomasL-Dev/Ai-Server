@@ -1,0 +1,36 @@
+
+
+.sub-item-value{
+    border: none;
+    border-radius: 5px;
+
+    background-color: var(--beige);
+    color: var(--orange);
+
+    padding: 5px;
+
+}
+
+
+
+
+
+
+.sub-item-updater{
+    background-color: var(--cyan2);
+    color: var(--beige);
+
+    border: none;
+    border-radius: 5px;
+
+    padding: 5px;
+}
+
+.sub-item-updater:hover{
+    background-color: var(--orange);
+    color: var(--cyan3);
+}
+
+
+
+

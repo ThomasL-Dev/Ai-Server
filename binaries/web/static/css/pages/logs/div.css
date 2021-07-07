@@ -1,0 +1,20 @@
+
+
+.log-content{
+    max-width: max-content;
+    max-height: 100%;
+
+    overflow: overlay;
+
+    margin: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    align-items: flex-start;
+
+    position: absolute;
+
+    margin-left: 20vw;
+    margin-right: 0vw;
+}

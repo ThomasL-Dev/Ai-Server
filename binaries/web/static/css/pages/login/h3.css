@@ -1,0 +1,10 @@
+
+
+.login-title{
+    border-style: solid;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: var(--beige);
+    padding-bottom: 20px;
+}

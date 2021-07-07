@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+
+    {% include 'obj/css/header.html' %}
+    {% include 'obj/css/index_css.html' %}
+
+    <title>{{ ia_name }}</title>
+</head>
+
+
+
+<body onload="startHorloge()">
+
+    <div class="body" onclick="window.location.href='/admin/login'">
+    <!-- START BODY -->
+
+
+        <div class="title">
+            <img class="ai-image" src="{{ static_url('img/icon.png') }}">
+            <h3 class="ai-name">{{ ia_name }}</h3>
+        </div>
+
+
+        <h3 class="horloge-index hoverable" id="horloge">00:00:00</h3>
+
+
+        <h3 class="version hoverable">version : {{ version }}</h3>
+
+            <!--<h3 class="ip-local">Ip locale : {{ private_ip }}</h3>
+            <h3 class="ip-public">Ip publique : {{ public_ip }}</h3>-->
+
+
+    <!-- END BODY -->
+    </div>
+
+</body>
+</html>

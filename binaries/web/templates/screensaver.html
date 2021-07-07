@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+
+<head>
+    <meta charset="UTF-8">
+
+    {% include 'obj/css/header.html' %}
+    {% include 'obj/css/screensaver_css.html' %}
+
+    <!-- TITLE -->
+    <title>{{ ia_name }} - Screensaver</title>
+
+    <script>
+        function ssHorloge() {
+            var today = new Date()
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+
+            s = checkTime(s);
+            m = checkTime(m);
+            h = checkTime(h);
+
+            document.getElementById('h').innerHTML = h;
+            document.getElementById('m').innerHTML = m;
+            document.getElementById('s').innerHTML = s;
+
+            var t = setTimeout(ssHorloge, 1000);
+        }
+
+        function checkTime(i) {
+            if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+            return i;
+        }
+    </script>
+
+
+    <meta http-equiv="refresh" content="600">
+
+
+
+
+</head>
+
+<body onload="ssHorloge()">
+
+    <div class="body" onclick="window.location.href='/admin/panel'">
+
+        {% include 'obj/base_title.html' %}
+
+        <div class="time">
+            <!-- horloge -->
+            <h3 class="time-text" id="h">00</h3>
+            <h3 class="time-text" id="m">00</h3>
+            <h3 class="time-text" id="s">00</h3>
+        </div>
+
+
+        <div class="date">
+            <h3 class="date-text" id="date">{{ date }}</h3>
+            <h3 class="date-text" id="month">{{ month }}</h3>
+            <h3 class="date-text" id="year">{{ year }}</h3>
+        </div>
+
+
+        <div class="meteo">
+            <h3 class="meteo-text" id="localisation">{{ localisation }}</h3>
+            <h3 class="meteo-text" id="degree">{{ degree }}</h3>
+            <h3 class="meteo-text" id="wind-speed">Vent : {{ wind_speed }}</h3>
+            <h3 class="meteo-text" id="weather">{{ weather }}</h3>
+            <img id="weather_img" name="IMG" src="{{ weather_img }}">
+        </div>
+
+    </div>
+
+</body>
+
+</html>

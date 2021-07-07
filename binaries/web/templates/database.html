@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+
+<head>
+    <meta charset="UTF-8">
+
+    {% include 'obj/css/header.html' %}
+    {% include 'obj/css/content.html' %}
+
+    <!-- TITLE -->
+    <title>{{ ia_name }} - Admin Database Tables</title>
+</head>
+
+<body onload="startHorloge()">
+
+    <div class="body-container">
+
+        {% include 'obj/return_button.html' %}
+        {% include 'obj/base_infos.html' %}
+
+
+        <div class="content">
+
+            {% for table in db_tables %}
+
+                 {% try %}
+                      <div class="item" onclick="window.location.href='/admin/panel/database/table/{{ table }}'">
+                          <div class="item-title-container">
+                              <form class="form-item-remove" method="post">
+                                  <input type="hidden" name="remove-value"  value="{{ table }}">
+                                  <input type="submit" name="remove" class="input-item-remove" value="X">
+                              </form>
+
+                              <h3 class="item-title"> Table </h3>
+                          </div>
+
+                          <div class="item-content-container">
+                              <h5 style="padding: 2em;"> {{ table }} </h5>
+                          </div>
+                      </div>
+                 {% except %}
+                 {% end %}
+
+            {% end %}
+
+        </div>
+
+    </div>
+
+
+
+</body>
+
+</html>

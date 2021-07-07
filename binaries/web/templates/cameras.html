@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+
+<head>
+    <meta charset="UTF-8">
+
+       {% include 'obj/css/header.html' %}
+       {% include 'obj/css/content.html' %}
+
+    <!-- TITLE -->
+    <title>{{ ia_name }} - Admin Cameras</title>
+</head>
+
+<body onload="startHorloge()">
+
+    <div class="body">
+
+        {% include 'obj/return_button.html' %}
+        {% include 'obj/base_infos.html' %}
+
+        {% include 'obj/add_new_value_button.html' %}
+
+        <div class="content">
+
+            {% for camera in cameras_list %}
+
+                 {% try %}
+                      <div class="item" onclick="window.location.href='/admin/panel/cameras/feed/{{ camera.get_name() }}'">
+                          <div class="item-title-container">
+                              <form class="form-item-remove" method="post">
+                                  <input type="hidden" name="remove-value"  value="{{ camera.get_name() }}">
+                                  <input type="submit" name="remove" class="input-item-remove" value="X">
+                              </form>
+
+                              <h3 class="item-title"> {{ camera.get_name() }} </h3>
+                          </div>
+
+                          <div class="item-content-container">
+                              {% try %}
+                                  {% set img_path = static_url('cameras/' + camera.get_name() + '/' + camera.get_live_frame() ) %}
+                              {% except %}
+                                  {% set img_path = static_url('img/none.png') %}
+                              {% end %}
+                              <img src="{{ img_path }}" style="width: 18em;">
+                          </div>
+                      </div>
+                 {% except %}
+                 {% end %}
+
+            {% end %}
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

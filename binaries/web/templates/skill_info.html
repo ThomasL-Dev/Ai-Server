@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+
+<head>
+    <meta charset="UTF-8">
+
+    {% include 'obj/css/header.html' %}
+    {% include 'obj/css/content.html' %}
+    {% include 'obj/css/skill_info_css.html' %}
+
+    <!-- TITLE -->
+    <title>{{ ia_name }} - Admin {{ skill._name.capitalize() }} Infos</title>
+</head>
+
+<body onload="startHorloge()">
+
+    <div class="body">
+
+
+        {% include 'obj/return_button.html' %}
+        {% include 'obj/base_infos.html' %}
+
+
+        <h3 class="skill-info-title">{{ skill._name.capitalize() }}</h3>
+
+
+        <div class="content">
+
+            {% for info in skill_infos %}
+
+                 {% try %}
+                      <div class="item">
+                          <div class="item-title-container">
+                              <h3 class="item-title"> {{ info.replace('_', ' ').capitalize() }} </h3>
+                          </div>
+
+                          <div class="item-content-container">
+                              <h5 style="padding: 2em;"> {{ skill_infos[info] }} </h5>
+                          </div>
+                      </div>
+                 {% except %}
+                 {% end %}
+
+            {% end %}
+
+        </div>
+
+    </div>
+
+
+
+</body>
+
+</html>

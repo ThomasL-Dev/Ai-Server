@@ -1,0 +1,25 @@
+
+
+.add-new-value-btn{
+    background-color: var(--cyan2);
+    color: var(--beige);
+
+    font-size: 3em;
+
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--beige);
+    border-radius: 5em;
+}
+
+
+
+.add-new-value-btn:hover{
+    border-color: var(--orange);
+    color: var(--orange);
+}

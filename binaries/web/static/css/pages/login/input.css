@@ -1,0 +1,32 @@
+
+
+.login-input{
+    background-color: var(--black2);
+    color: var(--cyan);
+    font-size: 1em;
+    margin-top: 2em;
+    border-radius: 0.5em;
+    border: none;
+    padding: 1em;
+}
+
+.login-input{
+    border: none;
+}
+
+
+
+.btn-login{
+    margin-top: 2em;
+    background-color: var(--cyan2);
+    color: var(--beige);
+    font-size: 1em;
+    margin-top: 2em;
+    border-radius: 0.5em;
+    border: none;
+    padding: 0.5em;
+}
+
+.btn-login:hover{
+    color: var(--orange);
+}

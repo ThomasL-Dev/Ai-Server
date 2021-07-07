@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+
+<head>
+    <meta charset="UTF-8">
+
+    {% include 'obj/css/header.html' %}
+    {% include 'obj/css/logs_css.html' %}
+
+    <!-- TITLE -->
+    <title>{{ ia_name }} - Logs</title>
+</head>
+
+<body onload="startHorloge()">
+
+    <div class="body">
+
+        {% include 'obj/return_button.html' %}
+        {% include 'obj/base_infos.html' %}
+
+        <div class="log-content">
+            {% for log_line in log_lines %}
+
+                {% if "starting server ..." in log_line.lower() %}
+                    <h3 class="log-label" style="margin-top: 5%;">{{ log_line }}</h3>
+
+
+                {% elif "[info]" in log_line.lower() %}
+                    {% if "routes" in log_line.lower() or "ip" in log_line.lower() %}
+                        <h3 class="log-label selectable" style="color: magenta;">{{ log_line }}</h3>
+
+
+                    {% elif "connected to server" in log_line.lower() %}
+                        <h3 class="log-label" style="color: green;">{{ log_line }}</h3>
+
+
+                    {% elif "disconnected from server" in log_line.lower() %}
+                        <h3 class="log-label" style="color: red;">{{ log_line }}</h3>
+
+
+                    {% elif "unauthorized" in log_line.lower() %}
+                            <h3 class="log-label" style="color: red;">{{ log_line }}</h3>
+
+
+                    {% elif "skill" in log_line.lower() %}
+                       {% if "not processed --" in log_line.lower() %}
+                           <h3 class="log-label" style="color: red;">{{ log_line }}</h3>
+
+                       {% elif "processed" in log_line.lower() %}
+                           <h3 class="log-label" style="color: green;">{{ log_line }}</h3>
+
+                       {% end %}
+
+                    {% else %}
+                        <h3 class="log-label" style="color: orange;">{{ log_line }}</h3>
+
+                    {% end %}
+
+
+                {% elif "[error]" in log_line.lower() %}
+                    <h3 class="log-label" style="color: red;">{{ log_line }}</h3>
+
+
+                {% else %}
+                    <h3 class="log-label">{{ log_line }}</h3>
+
+                {% end %}
+
+            {% end %}
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

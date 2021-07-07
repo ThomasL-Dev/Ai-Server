@@ -1,0 +1,23 @@
+.ai-image{
+    width: 15em;
+
+    border-radius: 8em;
+
+    -moz-box-shadow:    0px 0px 10px 6px var(--beige);
+  	-webkit-box-shadow: 0px 0px 10px 6px var(--beige);
+  	box-shadow:         0px 0px 10px 6px var(--beige);
+
+
+
+	-webkit-animation: rotate-img 50s ease-in-out infinite;
+	        animation: rotate-img 50s ease-in-out infinite;
+}
+
+
+
+.ai-image:hover{
+    -moz-box-shadow:    0px 0px 10px 6px var(--orange);
+  	-webkit-box-shadow: 0px 0px 10px 6px var(--orange);
+  	box-shadow:         0px 0px 10px 6px var(--orange);
+}
+

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+
+<head>
+    <meta charset="UTF-8">
+
+    {% include 'obj/css/header.html' %}
+    {% include 'obj/css/panel_index_css.html' %}
+
+    <!-- TITLE -->
+    <title>{{ ia_name }} - Admin Panel</title>
+</head>
+
+<body onload="startHorloge()">
+
+    <div class="body">
+
+        {% include 'obj/base_title.html' %}
+
+        <div class="menu-container">
+
+            <div class="menu">
+
+                <div class="menu-item" onclick="window.location.href='/admin/panel/devices'">
+                    <img class="img-menu" src="{{ static_url('img/devices.png') }}">
+                    <h4 class="menu-item-text" >Devices</h4>
+                </div>
+
+                <div class="menu-item" onclick="window.location.href='/admin/panel/skills'">
+                    <img class="img-menu" src="{{ static_url('img/skills.png') }}">
+                    <h4 class="menu-item-text" >Skills</h4>
+                </div>
+
+
+                <div class="menu-item" onclick="window.location.href='/admin/panel/cameras'">
+                    <img class="img-menu" src="{{ static_url('img/camera.png') }}">
+                    <h4 class="menu-item-text">Cameras</h4>
+                </div>
+
+
+                <div class="menu-item" onclick="window.location.href='/admin/panel/database'">
+                    <img class="img-menu" src="{{ static_url('img/database.png') }}">
+                    <h4 class="menu-item-text">Database</h4>
+                </div>
+
+
+                <div class="menu-item" onclick="window.location.href='/admin/panel/parametres'">
+                    <img class="img-menu" src="{{ static_url('img/settings.png') }}">
+                    <h4 class="menu-item-text">Paramètres</h4>
+                </div>
+
+
+                <div class="menu-item" onclick="window.location.href='/admin/panel/logs'">
+                    <img class="img-menu" src="{{ static_url('img/logs.png') }}">
+                    <h4 class="menu-item-text">Logs</h4>
+                </div>
+
+
+                <div class="menu-item" onclick="window.location.href='/admin/panel/restart'">
+                    <img class="img-menu" src="{{ static_url('img/restart.png') }}">
+                    <h4 class="menu-item-text">Restart Server</h4>
+                </div>
+
+
+                <div class="menu-item" onclick="window.location.href='/admin/panel/stop'">
+                    <img class="img-menu" src="{{ static_url('img/shutdown.png') }}">
+                    <h4 class="menu-item-text">Stop Server</h4>
+                </div>
+
+
+                <div class="menu-item" onclick="window.location.href='/admin/panel/restart_machine'">
+                    <img class="img-menu" src="{{ static_url('img/shut-comp.png') }}">
+                    <h4 class="menu-item-text">Restart Machine</h4>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="ips">
+            <h3 class="ip-local hoverable selectable">Ip locale : {{ private_ip }}</h3>
+            <h3 class="ip-public hoverable selectable">Ip publique : {{ public_ip }}</h3>
+        </div>
+
+        {% include 'obj/base_infos.html' %}
+
+    </div>
+
+</body>
+
+</html>

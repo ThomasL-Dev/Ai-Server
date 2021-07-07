@@ -1,0 +1,26 @@
+:root{
+    --cyan: #029692;  /* cyan */
+    --cyan1: #2da29261;  /* bleu cyan foncé */
+    --cyan2: #15524a61; /* bleu cyan plus foncé */
+    --cyan3: #183a36;
+
+    --black: #1b1b1b;    /* noir clair */
+    --black1: #1d1d1d;   /* noir clair */
+    --black2: #202020;  /* noir plus clair */
+    --black3: #0e0e0e;
+
+    --beige: beige;  /* beige */
+    --orange: #bfa276;  /* orange */
+
+    --red: red;
+    --red1: #ff6c6c;
+
+    --transparent: #ffffff00;
+
+
+    --hover: #ffffff05;
+
+
+    --scrollbar-color: #2da29261;
+    --scrollbar-color-hover: #36d2f514;
+}

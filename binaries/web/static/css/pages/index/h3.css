@@ -1,0 +1,75 @@
+.ai-name{
+    margin-left: 1em;
+    position: absolute;
+    font-size: 3em;
+    top: 6.2em;
+    opacity: 0.8;
+
+    -webkit-animation: scale-up-hor-center 1.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	        animation: scale-up-hor-center 1.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+
+}
+@media screen and (max-width: 1024px){
+    .ai-name{
+        top: 13.5em;
+    }
+}
+
+
+
+
+.horloge-index{
+    position: absolute;
+    width: fit-content;
+    top: 10px;
+    left: 10px;
+    font-size: 1.6em;
+    padding: 10px;
+
+    padding-left: 20px;
+    padding-right: 20px;
+
+    border-radius: 1em;
+    -moz-box-shadow:    0px 0px 5px 1px var(--beige);
+  	-webkit-box-shadow: 0px 0px 5px 1px var(--beige);
+  	box-shadow:         0px 0px 5px 1px var(--beige);
+
+}
+.horloge-index:hover{
+    -moz-box-shadow:    0px 0px 5px 1px var(--orange);
+  	-webkit-box-shadow: 0px 0px 5px 1px var(--orange);
+  	box-shadow:         0px 0px 5px 1px var(--orange);
+}
+
+
+
+
+
+@-webkit-keyframes scale-up-hor-center {
+  0% {
+    -webkit-transform: scaleX(0.4);
+            transform: scaleX(0.4);
+            color: var(--transparent);
+
+  }
+  100% {
+    -webkit-transform: scaleX(1);
+            transform: scaleX(1);
+            color: var(--beige);
+
+  }
+}
+@keyframes scale-up-hor-center {
+  0% {
+    -webkit-transform: scaleX(0.4);
+            transform: scaleX(0.4);
+            color: var(--transparent);
+
+  }
+  100% {
+    -webkit-transform: scaleX(1);
+            transform: scaleX(1);
+            color: var(--beige);
+
+  }
+}

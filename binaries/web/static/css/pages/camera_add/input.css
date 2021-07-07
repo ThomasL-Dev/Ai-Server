@@ -1,0 +1,47 @@
+
+
+.cam-name-input{
+    background-color: var(--beige);
+    color: var(--orange);
+
+    margin-bottom: 3em;
+
+    border: none;
+    border-radius: 5px;
+
+    padding: 10px;
+
+}
+
+
+
+
+.cam-index-input{
+    background-color: var(--beige);
+    color: var(--orange);
+
+    margin-bottom: 3em;
+
+    border: none;
+    border-radius: 5px;
+
+    padding: 10px;
+
+}
+
+
+
+.cam-add{
+    background-color: var(--cyan2);
+    color: var(--beige);
+
+    padding: 10px;
+
+    border: none;
+    border-radius: 5px;
+}
+
+.cam-add:hover{
+    background-color: var(--cyan3);
+    color: var(--orange);
+}

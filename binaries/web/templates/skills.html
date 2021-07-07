@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+
+<head>
+    <meta charset="UTF-8">
+
+    {% include 'obj/css/header.html' %}
+    {% include 'obj/css/content.html' %}
+
+    <!-- TITLE -->
+    <title>{{ ia_name }} - Admin Skills</title>
+</head>
+
+<body onload="startHorloge()">
+
+    <div class="body">
+
+        {% include 'obj/return_button.html' %}
+        {% include 'obj/base_infos.html' %}
+
+
+        <div class="content">
+
+            {% for skill in skill_list %}
+
+                 {% try %}
+                      <div class="item" onclick="window.location.href='/admin/panel/skills/info/{{ skill._name }}'">
+                          <div class="item-title-container">
+                              <form class="form-item-remove" method="post">
+                                  <input type="hidden" name="remove-value"  value="{{ skill._name }}">
+                                  <input type="submit" name="remove" class="input-item-remove" value="X">
+                              </form>
+
+                              <h3 class="item-title"> {{ skill._name }} </h3>
+                          </div>
+
+                          <div class="item-content-container">
+                              <h5 style="padding: 2em;"> Commande : /{{ skill.cmd }} </h5>
+                          </div>
+                      </div>
+                 {% except %}
+                 {% end %}
+
+            {% end %}
+
+        </div>
+
+    </div>
+
+
+
+</body>
+
+</html>

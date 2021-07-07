@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+
+<head>
+    <meta charset="UTF-8">
+
+    {% include 'obj/css/header.html' %}
+    {% include 'obj/css/content.html' %}
+    {% include 'obj/css/parametres_css.html' %}
+
+    <!-- TITLE -->
+    <title>{{ ia_name }} - Admin Paramètres</title>
+</head>
+
+<body onload="startHorloge()">
+
+    <div class="body">
+
+        {% include 'obj/return_button.html' %}
+        {% include 'obj/base_infos.html' %}
+
+        <div class="content">
+
+            {% for section in boot_file_sections %}
+
+                 {% try %}
+                      <div class="item">
+                          <div class="item-title-container">
+                              <!--<form class="form-item-remove" method="post">
+                                  <input type="hidden" name="remove-value"  value="">
+                                  <input type="submit" name="remove" class="input-item-remove" value="X">
+                              </form>-->
+
+                              <h3 class="item-title"> {{ section.name.capitalize() }} </h3>
+                          </div>
+
+                          <div class="item-content-container">
+                              {% for options in section.options %}
+
+                              <div class="sub-item">
+
+                                  <h4 class="form-sub-item">{{ options['name'].replace("_", " ").capitalize() }} : </h4>
+
+                                  <form class="form-sub-item" method="post">
+                                      <input type="hidden" name="properties-name" value="{{ options['name'] }}">
+
+                                      <input class="sub-item-value" type="text" name="properties-value" value="{{ options['value'] }}">
+                                      <input class="sub-item-updater" type="submit" value="Modifier">
+                                  </form>
+
+                              </div>
+
+                              {% end %}
+                          </div>
+
+                      </div>
+                 {% except %}
+                 {% end %}
+
+            {% end %}
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

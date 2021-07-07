@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    {% include 'obj/css/header.html' %}
+    {% include 'obj/css/content.html' %}
+
+    <!-- TITLE -->
+    <title>{{ ia_name }} - Admin Skills</title>
+</head>
+
+<body onload="startHorloge()">
+
+    <div class="body">
+
+        {% include 'obj/return_button.html' %}
+        {% include 'obj/base_infos.html' %}
+
+
+         <div class="content">
+
+            {% for device in device_connected_list %}
+
+                 {% try %}
+                      <div class="item" onclick="window.location.href='http://{{ device.get_ip() }}:8080'">
+                          <div class="item-title-container">
+                              <form class="form-item-remove" method="post">
+                                  <input type="hidden" name="remove-value"  value="{{ device.get_ip() }}">
+                                  <input type="submit" name="remove" class="input-item-remove" value="X">
+                              </form>
+
+                              <h3 class="item-title"> {{ device.get_name().capitalize() }} </h3>
+                          </div>
+
+                          <div class="item-content-container">
+                              <h5 style="padding: 0.4em;">Ip : {{ device.get_ip() }}</h5>
+                              <h5 style="padding: 0.4em;">Alias : {{ device.get_alias() }}</h5>
+                              <h5 style="padding: 0.4em;">Mac : {{ device.get_mac() }}</h5>
+                              <h5 style="padding: 0.4em;">Vendor : {{ device.get_vendor() }}</h5>
+                              <h5 style="padding: 0.4em;">Type : {{ device.get_type() }}</h5>
+                          </div>
+                      </div>
+                 {% except %}
+                 {% end %}
+
+            {% end %}
+
+        </div>
+
+    </div>
+
+</body>
+</html>

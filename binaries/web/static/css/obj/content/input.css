@@ -1,0 +1,19 @@
+
+
+
+.input-item-remove{
+    background-color: var(--red);
+
+    border-radius: 20px;
+    border: none;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+
+    margin-top: 0.15em;
+    margin-left: 0.15em;
+}
+
+
+.input-item-remove:hover{
+    background-color: var(--red1);
+}

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+
+<head>
+    <meta charset="UTF-8">
+
+    {% include 'obj/css/header.html' %}
+    {% include 'obj/css/content.html' %}
+
+    {% include 'obj/css/table_info.html' %}
+
+    <!-- TITLE -->
+    <title>{{ ia_name }} - Admin Table {{ table_name }}</title>
+</head>
+
+<body onload="startHorloge()">
+
+    <div class="body">
+
+        {% include 'obj/return_button.html' %}
+        {% include 'obj/base_infos.html' %}
+
+        {% include 'obj/add_new_value_button.html' %}
+
+
+        <div class="content">
+
+            {% if table_contents != "" %}
+
+                {% for content in table_contents %}
+                     <div class="item">
+                         <div class="item-title-container">
+                             <form class="form-item-remove" method="post">
+                                 <input type="hidden" name="where" value="{{ columns_table_name[0] }}">
+                                 <input type="hidden" name="where-value" value="{{ content[0] }}">
+                                 <input type="hidden" name="what-value" value="{{ content[0] }}">
+                                 <input type="submit" name="remove" class="input-item-remove" value="X">
+                             </form>
+
+                             {% if 's_' in str(table_name) %}
+                                 <h3 class="item-title">{{ table_name.split('s_')[0] }} : {{ content[0].capitalize() }}</h3>
+                             {% else %}
+                                 <h3 class="item-title">{{ table_name[:-1] }} : {{ content[0].capitalize() }}</h3>
+                             {% end %}
+
+                         </div>
+
+                         <div class="item-content-container">
+                             {% for column_number in range(len(columns_table_name)) %}
+                                <div class="sub-item">
+
+                                    <h4 class="form-sub-item">{{ columns_table_name[column_number] }} : </h4>
+
+                                    <form class="form-sub-item" method="post">
+
+                                        <input class="sub-item-value" type="text" name="what-value" value="{{ content[column_number] }}">
+                                        <input class="sub-item-updater" type="submit" name="update" value="Update">
+
+                                        <input type="hidden" name="table-name" value="{{ table_name }}">
+                                        <input type="hidden" name="what" value="{{ columns_table_name[column_number] }}">
+                                        <input type="hidden" name="where" value="{{ columns_table_name[0] }}">
+                                        <input type="hidden" name="where-value" value="{{ content[0] }}">
+
+                                    </form>
+
+                                </div>
+                             {% end %}
+                         </div>
+                     </div>
+                {% end %}
+            {% end %}
+
+        </div>
+
+
+
+        <!--<div class="div-panel-body">
+
+            <div class="div-panel-content-container">
+
+                <div class="div-panel-content">
+
+                    {% if table_contents != "" %}
+
+                        {% for content in table_contents %}
+                            <section class="section-parametres">
+                                {% if 's_' in str(table_name) %}
+                                    <h1 class="section-title-parametres">{{ table_name.split('s_')[0] }} : {{ content[0].capitalize() }}</h1>
+                                {% else %}
+                                    <h1 class="section-title-parametres">{{ table_name[:-1] }} : {{ content[0].capitalize() }}</h1>
+                                {% end %}
+
+                                <form method="post">
+                                    <input type="hidden" name="where" value="{{ columns_table_name[0] }}">
+                                    <input type="hidden" name="where-value" value="{{ content[0] }}">
+                                    <input type="hidden" name="what-value" value="{{ content[0] }}">
+                                    <input type="submit" class="btn-table-section-remover" name="signal-remove" value="Remove">
+                                </form>
+
+                                {% for column_number in range(len(columns_table_name)) %}
+                                    <div class="section-content-parametres-container">
+                                        <p class="section-content-parametres">{{ columns_table_name[column_number] }}</p>
+                                        <form class="form-section-btn" method="post">
+
+
+                                            <input type="hidden" name="table-name" value="{{ table_name }}">
+
+                                            <input type="hidden" name="what" value="{{ columns_table_name[column_number] }}">
+
+                                            <input type="text" name="what-value" class="section-content-parametres-value" value="{{ content[column_number] }}">
+
+                                            <input type="hidden" name="where" value="{{ columns_table_name[0] }}">
+
+                                            <input type="hidden" name="where-value" value="{{ content[0] }}">
+
+                                            <input type="submit" class="btn-section-modifier" name="signal-update" value="Update">
+
+                                        </form>
+                                    </div>
+                                {% end %}
+                            </section>
+                        {% end %}
+                    {% end %}
+
+
+                </div>
+
+            </div>
+
+        </div>-->
+
+
+
+    </div>
+
+
+
+</body>
+
+</html>

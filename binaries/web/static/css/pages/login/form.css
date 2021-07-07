@@ -1,0 +1,38 @@
+
+.login{
+    background-color: var(--black);
+    display: grid;
+    width: fit-content;
+    /*height: -webkit-fill-available;*/
+    border-radius: 2em;
+    margin: auto;
+    margin-top: 8em;
+    padding-top: 10em;
+    padding-bottom: 10em;
+    padding-left: 3em;
+    padding-right: 3em;
+
+    -moz-box-shadow:    0px 0px 10px 6px var(--beige);
+  	-webkit-box-shadow: 0px 0px 10px 6px var(--beige);
+  	box-shadow:         0px 0px 10px 6px var(--beige);
+}
+
+
+
+
+
+.login:hover{
+    background-color: #1f1f1f;
+    -moz-box-shadow:    0px 0px 10px 6px var(--orange);
+  	-webkit-box-shadow: 0px 0px 10px 6px var(--orange);
+  	box-shadow:         0px 0px 10px 6px var(--orange);
+}
+
+
+
+
+@media screen and (max-width: 1024px){
+    .login{
+        margin-top: 25em;
+    }
+}

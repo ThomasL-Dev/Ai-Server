@@ -1,0 +1,9 @@
+
+
+.add-new-value-form{
+    width: fit-content;
+
+    position: absolute;
+    bottom: 10em;
+    left: 1em;
+}

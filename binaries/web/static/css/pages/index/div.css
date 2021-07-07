@@ -1,0 +1,14 @@
+.title{
+    width: max-content;
+    margin: auto;
+    margin-top: 13em;
+}
+
+
+@media screen and (max-width: 1024px){
+    .title{
+        width: max-content;
+        margin: auto;
+        margin-top: 35em;
+    }
+}

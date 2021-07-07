@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+
+<head>
+    <meta charset="UTF-8">
+
+    {% include 'obj/css/header.html' %}
+    {% include 'obj/css/camera_feed_css.html' %}
+
+    <!-- TITLE -->
+    <title>{{ ia_name }} - Camera {{ camera_name.capitalize() }}</title>
+</head>
+
+<body onload="startHorloge()">
+
+    <div class="body">
+
+        {% include 'obj/return_button.html' %}
+        {% include 'obj/base_infos.html' %}
+
+        <script>
+            setInterval(function() {
+
+                    {% try %}
+                        {% set img_path = static_url('cameras/' + camera.get_name() + '/' + camera.get_live_frame() ) %}
+                    {% except %}
+                        {% set img_path = static_url('img/none.png') %}
+                    {% end %}
+
+
+                    var myImageElement = document.getElementById('feed');
+
+                    var imgPath = "{{ img_path }}" + "?timestamp=" + new Date().getTime();
+
+                    myImageElement.src = imgPath;
+
+            }, 550);
+        </script>
+
+        <img id="feed">
+
+    </div>
+
+
+
+</body>
+
+</html>
