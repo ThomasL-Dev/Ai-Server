@@ -6,48 +6,41 @@ from controllers.GeolocalisationController import GeolocalisationController
 
 class MeteoController:
 
+    def __init__(self, geolocalisation: str):
+        # init localisation
+        self.__geolocalisation = geolocalisation
+        # data json request
+        self.__request_url = "https://api.openweathermap.org/data/2.5/weather?q={},fr&units=metric&appid=4025ff744d914dd5f05a3b9bd798f413&lang=fr".format(self.__geolocalisation)
+        self.__request = requests.get(self.__request_url)
+        self.request_data = self.__request.json()
 
-    @staticmethod
-    def temperature():
+
+
+    def temperature(self):
         try:
-            weather_data = requests.get("https://api.openweathermap.org/data/2.5/weather?q=" + GeolocalisationController.get_localisation() + ",fr&units=metric&appid=4025ff744d914dd5f05a3b9bd798f413&lang=fr")
-            weather = weather_data.json()
-
-            return str(int(weather['main']['temp'])) + "°"
+            return "{}°".format(str(int(self.request_data['main']['temp'])))
         except:
             return "Température inconnue"
 
-
-    @staticmethod
-    def weather():
+    def weather(self):
         try:
-            weather_data = requests.get("https://api.openweathermap.org/data/2.5/weather?q=" + GeolocalisationController.get_localisation() + ",fr&units=metric&appid=4025ff744d914dd5f05a3b9bd798f413&lang=fr")
-            weather = weather_data.json()
-
-            return str(weather['weather'][0]['description'])
+            return str(self.request_data['weather'][0]['description'])
         except:
             return "Infos inconnue"
 
-
-    @staticmethod
-    def wind_speed():
+    def wind_speed(self):
         try:
-            weather_data = requests.get("https://api.openweathermap.org/data/2.5/weather?q=" + GeolocalisationController.get_localisation() + ",fr&units=metric&appid=4025ff744d914dd5f05a3b9bd798f413&lang=fr")
-            weather = weather_data.json()
-            calcul = (int(weather['wind']['speed']) * 3600) / 1000
-            return str(int(calcul)) + " Km/h"
+            calcul = (int(self.request_data['wind']['speed']) * 3600) / 1000
+            return "{} Km/h".format(str(int(calcul)))
         except:
             return "Infos inconnue"
 
-
-    @staticmethod
-    def url_img_weather():
+    def url_img_weather(self):
         try:
-            weather_data = requests.get("https://api.openweathermap.org/data/2.5/weather?q=" + GeolocalisationController.get_localisation() + ",fr&units=metric&appid=4025ff744d914dd5f05a3b9bd798f413&lang=fr")
-            weather = weather_data.json()
-            url = "http://openweathermap.org/img/wn/" + str(weather['weather'][0]['icon']) + ".png"
+            url = "http://openweathermap.org/img/wn/{}.png".format(str(self.request_data['weather'][0]['icon']))
             return url
         except:
             return None
 
-
+    def get_request_data(self):
+        return self.request_data

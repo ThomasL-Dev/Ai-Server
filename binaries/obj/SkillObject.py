@@ -24,7 +24,7 @@ class SkillObject(AiObject):
         AiObject.__init__(self, kernel)
 
         # init private name
-        self._name = f'{self.__class__.__name__}'
+        self._name = self.__class__.__name__
 
 
 

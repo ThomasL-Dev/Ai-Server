@@ -22,15 +22,19 @@ class DiscordObject(discord.Client, AiObject):
         super(DiscordObject, self).__init__()
         AiObject.__init__(self, kernel)
         # init custom internal cmd
-        self._INTERNAL_CMD = ['/get_skills', "/get_devices", "/cmds"]
+        self._INTERNAL_CMD = ['/get_skills', "/get_devices", "/get_cameras", "/cmds"]
         # init var for sending log from async loop
         self._LOG_FLAG_SEND_TEXT_FROM_OUTSIDE_ASYNC_LOOP = False
-        self._LOG_TEXT_FROM_OUTSIDE_ASYNC_LOOP = None
+        self._LOG_TEXT_FROM_OUTSIDE_ASYNC_LOOP = []
         self._LOG_CHANNEL_FROM_OUTSIDE_ASYNC_LOOP = None
         # init var for sending chat text from async loop
         self._CHAT_FLAG_SEND_TEXT_FROM_OUTSIDE_ASYNC_LOOP = False
-        self._CHAT_TEXT_FROM_OUTSIDE_ASYNC_LOOP = None
+        self._CHAT_TEXT_FROM_OUTSIDE_ASYNC_LOOP = []
         self._CHAT_CHANNEL_FROM_OUTSIDE_ASYNC_LOOP = None
+
+        """
+        CREATE LIST FOR STORE MSG AND SEND WHEN AVAILABLE
+        """
 
 
 
@@ -41,8 +45,6 @@ class DiscordObject(discord.Client, AiObject):
         await self.change_presence(activity=discord.Game(name="Version : {} | {}".format(self.__kernel__.get_version(), str(self._INTERNAL_CMD).replace("'", "").replace("[", "").replace("]", ""))))
         # create loop task to send msg
         self.loop.create_task(self.__task_for_outside_async_loop())
-
-
 
     async def on_message(self, message):
         if message.author != self.user:  # don't respond to ourselves
@@ -65,18 +67,20 @@ class DiscordObject(discord.Client, AiObject):
                         await self.__cmd_get_skills()
                     if "/get_devices" == user_input:
                         await self.__cmd_get_devices()
+                    if "/get_cameras" == user_input:
+                        await self.__cmd_get_cameras()
 
 
 
     def send_log_outside_from_async_loop(self, string: str=None, channel_id: int=None) -> None:
         if string is not None or channel_id is not None:
-            self._LOG_TEXT_FROM_OUTSIDE_ASYNC_LOOP = string
+            self._LOG_TEXT_FROM_OUTSIDE_ASYNC_LOOP.append(string)
             self._LOG_CHANNEL_FROM_OUTSIDE_ASYNC_LOOP = channel_id
             self._LOG_FLAG_SEND_TEXT_FROM_OUTSIDE_ASYNC_LOOP = True
 
     def send_chat_outside_from_async_loop(self, string: str=None) -> None:
         if string is not None:
-            self._CHAT_TEXT_FROM_OUTSIDE_ASYNC_LOOP = string
+            self._CHAT_TEXT_FROM_OUTSIDE_ASYNC_LOOP.append(string)
             self._CHAT_FLAG_SEND_TEXT_FROM_OUTSIDE_ASYNC_LOOP = True
 
 
@@ -112,6 +116,19 @@ class DiscordObject(discord.Client, AiObject):
                 out += str(device) + "\n\n"
             await self.__send_chat(out)
 
+    async def __cmd_get_cameras(self) -> None:
+        # return the device list
+        if len(self.__kernel__.CamerasHandler.CAMERAS_LIST) < 1:
+            await self.__send_chat("Aucun élément trouvé")
+        else:
+            out = ""
+            for cam in self.__kernel__.CamerasHandler.CAMERAS_LIST:
+                out += str(cam) + "\n\n"
+            await self.__send_chat(out)
+
+
+
+
 
 
     async def __send_chat(self, string: str) -> None:
@@ -126,26 +143,26 @@ class DiscordObject(discord.Client, AiObject):
         # send msg to specific channel
         await self.get_channel(channel_id).send("{}".format(string))
 
-
-
     async def __task_for_outside_async_loop(self) -> None:
         while True:
             # if log channel flag is trigerred
             if self._LOG_FLAG_SEND_TEXT_FROM_OUTSIDE_ASYNC_LOOP:
                 # send to log channel
-                await self.__send_log(str(self._LOG_TEXT_FROM_OUTSIDE_ASYNC_LOOP), int(self._LOG_CHANNEL_FROM_OUTSIDE_ASYNC_LOOP))
+                for text in self._LOG_TEXT_FROM_OUTSIDE_ASYNC_LOOP:
+                    await self.__send_log(str(text), int(self._LOG_CHANNEL_FROM_OUTSIDE_ASYNC_LOOP))
+                    self._LOG_TEXT_FROM_OUTSIDE_ASYNC_LOOP.remove(text)
                 self._LOG_FLAG_SEND_TEXT_FROM_OUTSIDE_ASYNC_LOOP = False
 
             # if chat channel flag is trigerred
             elif self._CHAT_FLAG_SEND_TEXT_FROM_OUTSIDE_ASYNC_LOOP:
                 # send to chat channel
-                await self.__send_chat(self._CHAT_TEXT_FROM_OUTSIDE_ASYNC_LOOP)
+                for text in self._CHAT_TEXT_FROM_OUTSIDE_ASYNC_LOOP:
+                    await self.__send_chat(text)
+                    self._CHAT_TEXT_FROM_OUTSIDE_ASYNC_LOOP.remove(text)
                 self._CHAT_FLAG_SEND_TEXT_FROM_OUTSIDE_ASYNC_LOOP = False
 
             # wait a bit
-            await asyncio.sleep(0.15)
-
-
+            await asyncio.sleep(0.1)
 
     def __check_if_internal_cmd(self, string: str):
         # if the srting is in cmd list

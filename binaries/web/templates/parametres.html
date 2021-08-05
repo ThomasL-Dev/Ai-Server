@@ -19,6 +19,7 @@
 
         {% include 'obj/return_button.html' %}
         {% include 'obj/base_infos.html' %}
+        {% include 'obj/add_new_value_button.html' %}
 
         <div class="content">
 
@@ -47,6 +48,11 @@
 
                                       <input class="sub-item-value" type="text" name="properties-value" value="{{ options['value'] }}">
                                       <input class="sub-item-updater" type="submit" value="Modifier">
+
+                                      {% if section.name.lower() == "properties" and "ai_name" != options['name'].lower() and "server_port" != options['name'].lower() and "max_devices_authorized" != options['name'].lower()%}
+                                          <input class="sub-item-remover" type="submit" value="Remove" name="remove-signal">
+                                      {% end %}
+
                                   </form>
 
                               </div>

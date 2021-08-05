@@ -8,8 +8,8 @@ class HandlerObject(Thread, AiObject):
     def __init__(self, kernel):
         Thread.__init__(self)
         AiObject.__init__(self, kernel)
-
         self.setDaemon(True)
+        self.setName(self.__classname__)
 
         self.__console__.info("{} Initializing ...".format(self.__classname__))
 

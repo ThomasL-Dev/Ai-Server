@@ -19,6 +19,9 @@ from binaries.handlers.WebHandler import WebHandler
 from binaries.handlers.FtpHandler import FtpHandler
 from binaries.handlers.CamerasHandler import CamerasHandler
 
+#obj
+from binaries.obj.UpdaterObject import UpdaterObject
+
 # controllers
 from controllers.FolderController import FolderController
 from controllers.FileController import FileController
@@ -56,11 +59,9 @@ class Kernel:
 
         # init console
         self.console = ConsoleDebug()
-        self.console.clear_console()
         self.console.set_console_size()
+        self.console.clear_console()
         log.log("Starting server ...", startwith="\n")
-        self.console.kernel("Version : " + self.get_version())
-        # ===
 
         # create shortcut if not exist
         shortcut = Shortcut(console=self.console)
@@ -91,16 +92,25 @@ class Kernel:
         self.FtpHandler = FtpHandler(self)
         self.CamerasHandler = CamerasHandler(self)
 
+        # start Updater
+        self._version_file_url = "https://www.dropbox.com/s/jtgs1k6z23fm44c/server_version.txt?dl=1"
+        self._zip_folder_url = "https://www.dropbox.com/s/5ggzgp8rjacea1b/Server.zip?dl=1"
+        self.Updater = UpdaterObject(kernel=self, dropbox_url_version_file=self._version_file_url,
+                                     dropbox_url_binaries_zip=self._zip_folder_url)
+        self.Updater.update()
+        self.console.kernel("Version : " + self.get_version())
+
 
 
     def start(self) -> None:
         # set console name & size
         self.console.set_title(self.ia_name)
         self.console.set_console_size()
-        # start handlers
-        self.DiscordHandler.start()
+        # start webhandler for infos
         self.WebHandler.start()
+        # start else handlers
         self.AccountsHandler.start()
+        self.DiscordHandler.start()
         self.SkillHandler.start()
         self.DevicesHandler.start()
         self.RequestHandler.start()
@@ -140,18 +150,7 @@ class Kernel:
 
 
     def get_version(self) -> str:
-        # if file exits
-        if FileController.if_file_exist(self.PATH_FILE_VERSION):
-            # open it
-            with open(self.PATH_FILE_VERSION, 'r+') as v_file:
-                # get txt
-                version = v_file.readline()
-                v_file.close()
-            # return version txt
-            return version
-        else:
-            # else return 0
-            return "0"
+        return self.Updater.get_installed_version()
 
 
 
@@ -168,7 +167,7 @@ class Kernel:
     def __remove_cache(self) -> None:
         self.console.info('{} Removing cache'.format(self._class_name))
         # itterate every dir and file
-        for dir, dirname, filenames in os.walk(os.getcwd()):
+        for dir, dirname, filenames in os.walk(self.PATH_FOLDER_KERNEL):
             # if cache folder
             if "__pycache__" in dir.split("/")[-1:]:
                 # itterate every files in cache folder

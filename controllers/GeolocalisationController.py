@@ -6,40 +6,39 @@ from controllers.NetworkController import NetworkController
 
 class GeolocalisationController:
 
+    def __init__(self, ip: str):
+        # init ip
+        self.__ip = ip
+        # data json request
+        self.__request_url = 'http://ip-api.com/json/{}'.format(self.__ip)
+        self.__request = requests.get(self.__request_url)
+        self.request_data = self.__request.json()
 
-    @staticmethod
-    def get_localisation():
+
+
+    def get_localisation(self):
         try:
-            getData = requests.get('http://ip-api.com/json/' + NetworkController.public_ip())
-            geolocalisation = getData.json()
-            return str(geolocalisation['city'])
+            return str(self.request_data['city'])
         except:
             return 'Ville non localisé'
 
-    @staticmethod
-    def get_pays():
+    def get_pays(self):
         try:
-            getData = requests.get('http://ip-api.com/json/' + NetworkController.public_ip())
-            geolocalisation = getData.json()
-            return str(geolocalisation['country'])
+            return str(self.request_data['country'])
         except:
             return 'Pays non localisé'
 
-    @staticmethod
-    def get_region():
+    def get_region(self):
         try:
-            getData = requests.get('http://ip-api.com/json/' + NetworkController.public_ip())
-            geolocalisation = getData.json()
-            return str(geolocalisation['regionName'])
+            return str(self.request_data['regionName'])
         except:
             return 'Region non localisé'
 
-    @staticmethod
-    def get_cp():
+    def get_cp(self):
         try:
-            getData = requests.get('http://ip-api.com/json/' + NetworkController.public_ip())
-            geolocalisation = getData.json()
-            return str(geolocalisation['zip'])
+            return str(self.request_data['zip'])
         except:
             return 'Code postale non localisé'
 
+    def get_request_data(self):
+        return self.request_data

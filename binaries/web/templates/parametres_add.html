@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+
+<head>
+    <meta charset="UTF-8">
+
+    {% include 'obj/css/header.html' %}
+    {% include 'obj/css/camera_add_css.html' %}
+
+    <!-- TITLE -->
+    <title>{{ ia_name }} - Add an Option to BootFile</title>
+</head>
+
+<body onload="startHorloge()">
+
+    <div class="body">
+
+
+        {% include 'obj/return_button.html' %}
+        {% include 'obj/base_infos.html' %}
+
+
+        <form method="post" class="add-camera">
+
+            <div class="cam-name">
+                <h3 class="cam-name-text">Option Name :</h3>
+                <input class="cam-name-input" type="text" name="name">
+            </div>
+
+            <div class="cam-index">
+                <h3 class="cam-index-text">Option Value :</h3>
+                <input class="cam-index-input" type="text" name="value">
+            </div>
+
+            <input class="cam-add" type="submit" value="add option" name="add">
+
+        </form>
+
+
+
+    </div>
+
+
+
+</body>
+
+</html>

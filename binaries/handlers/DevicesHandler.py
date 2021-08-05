@@ -57,7 +57,7 @@ class DevicesHandler(HandlerObject):
                         continue
                 except:
                     continue
-                time.sleep(0.05)
+                time.sleep(0.7)
 
         # closing server when waiting is Null
         self.__stopping_handler()
@@ -92,7 +92,6 @@ class DevicesHandler(HandlerObject):
         # disconnecting the device
         try:
             self.__console__.info("{} Disconnecting device '{}'".format(self.__classname__, device.get_name()))
-            self.__remove_device_from_list(device.get_ip())
             device.disconnect()
         except Exception as e:
             self.__console__.error("{} Error while disconnecting device '{}'".format(self.__classname__, device.get_name(), e))
@@ -122,8 +121,6 @@ class DevicesHandler(HandlerObject):
             self.__add_device_to_list(device)
             # add to db
             self.__add_device_to_db(device)
-            # send to discord
-            self.__kernel__.DiscordHandler.send_log("Device {}({}) connected".format(device.get_name(), device.get_ip()), self.__kernel__.BootFile.get_value("discord_channel_log_device"))
 
     def __bind_adress(self) -> None:
         try:
@@ -148,14 +145,6 @@ class DevicesHandler(HandlerObject):
     def __add_device_to_list(self, device: DeviceObject) -> None:
         # add to device list
         self.DEVICES_CONNECTED_LIST.append(device)
-
-    def __remove_device_from_list(self, ip: str) -> None:
-        # check device in list
-        for device in self.DEVICES_CONNECTED_LIST:
-            # if device in list ip is egal to this ip
-            if device.get_ip() == ip:
-                # remove from list
-                self.__kernel__.DevicesHandler.DEVICES_CONNECTED_LIST.remove(device)
 
     def __add_device_to_db(self, device: DeviceObject) -> None:
         # insert or update in db

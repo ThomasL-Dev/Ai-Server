@@ -34,6 +34,7 @@ list_to_install = {
             "sox",
             "libsox-fmt-all",
             "libttspico-utils",
+            "espeak",
         ],
 
     }

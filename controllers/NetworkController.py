@@ -53,6 +53,6 @@ class NetworkController:
 
     @staticmethod
     def is_local_ip(ip: str):
-        if "192.168." in str(ip) or str(ip) == "127.0.0.1" or str(ip) == "::1":
+        if "192.168." in str(ip) or str(ip) == "127.0.0.1" or str(ip) == "::1" or str(ip) == "localhost":
             return True
         return False

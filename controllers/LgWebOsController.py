@@ -16,7 +16,7 @@ class LgWebOsController:
 
     def __init__(self, ip: str):
         self._ip = ip
-        self._key = "4bc05904df610728a9e46fd5e6b1e3be"
+        self._key = None
         self._sound_lvl_before_mute = 10
         self._webos = None
         self._webos_controller = None
@@ -125,7 +125,7 @@ class LgWebOsController:
     def _connect_tv(self):
         try:
             self._webos = WebOsClient(self._ip)
-            self._webos.client_key = self._key
+            self._key = self._webos.client_key
         except Exception as e:
             raise Exception('Cannot connect to LgWebOs')
 

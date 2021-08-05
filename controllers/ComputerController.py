@@ -6,7 +6,6 @@ import requests
 class ComputerController:
 
     def __init__(self, ip: str=None):
-
         self.ip = ip
 
     def popup(self, string: str):

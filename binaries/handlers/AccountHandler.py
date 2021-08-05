@@ -32,11 +32,13 @@ class AccountHandler(HandlerObject, AiObject):
     def add_account(self, name: str, pwd: str, perm: str='', active: str="true") -> None:
         # check if already in list or not
         if not self.__is_in_list(name):
-            self.__console__.info("{} Adding account '{}'".format(self.__classname__, name))
+            self.__console__.info("{} Adding account '{}'".format(self.__classname__, name.capitalize()))
             # add to db
             self.__add_account_to_db(name, pwd, perm, active)
             # add to list
             self.__add_account_to_list(name, pwd, perm, active)
+            self.__console__.info("{} Account '{}' added".format(self.__classname__, name.capitalize()))
+
 
     def update_accounts(self) -> None:
         self.__console__.info("{} Updating accounts".format(self.__classname__))
@@ -56,11 +58,11 @@ class AccountHandler(HandlerObject, AiObject):
                     # return True
                     self.__console__.info("{} '{}' Account authorized with password '{}'".format(self.__classname__, acc_name, acc_pwd))
                     # send to discord
-                    self.__kernel__.DiscordHandler.send_log("Account '{}' connected".format(acc_name), self.__kernel__.BootFile.get_value("discord_channel_log_account"))
+                    self.__kernel__.DiscordHandler.send_log("Account '{}' connected".format(acc_name.capitalize()), self.__kernel__.BootFile.get_value("discord_channel_log_account"))
                     return True
         # return False
         self.__console__.error("{} '{}' Account unauthorized with password '{}'".format(self.__classname__, acc_name, acc_pwd))
-        self.__kernel__.DiscordHandler.send_log("Account '{}' tried to connect".format(acc_name), self.__kernel__.BootFile.get_value("discord_channel_log_account"))
+        self.__kernel__.DiscordHandler.send_log("Account '{}' tried to connect".format(acc_name.capitalize()), self.__kernel__.BootFile.get_value("discord_channel_log_account"))
         return False
 
 

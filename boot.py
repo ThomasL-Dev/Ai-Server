@@ -1,8 +1,3 @@
-from binaries.Updater import Updater
-# start by update if needed
-update = Updater()
-update.start()
-
 from binaries.Requierements import install_requierement
 # install requierment if not already installed
 install_requierement()
@@ -19,4 +14,7 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         kernel._action_before_stopping_server()
         print("Exiting")
-
+    except Exception as e:
+        from binaries.Logger import Logger
+        import traceback
+        Logger().error("{} : {}".format(str(e), str(traceback.print_exc())))

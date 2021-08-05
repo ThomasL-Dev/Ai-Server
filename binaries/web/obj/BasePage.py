@@ -1,4 +1,5 @@
 import tornado.web
+from controllers.NetworkController import NetworkController
 # ========================================== FIN DES IMPORTS ========================================================= #
 
 
@@ -18,16 +19,15 @@ class BasePage(tornado.web.RequestHandler):
         self.check_access_permission()
 
 
-
     def get(self):
         try:
             if self.local_connexion_only:
-                if not self.local_connexion_security():
+                if not NetworkController.is_local_ip(str(self.request.remote_ip)):
                     self.redirect("/")
                     self.kernel.console.info(str(self.request.remote_ip) + " unauthorized to access to " + str(self.full_url), color='red')
 
             if self.need_oauth_security:
-                if not self.oauth_security_system():
+                if not self.is_user_connected():
                     self.redirect('/admin/login')
                     self.kernel.console.info(str(self.request.remote_ip) + " unauthorized to access to " + str(self.full_url), color='red')
 
@@ -92,7 +92,7 @@ class BasePage(tornado.web.RequestHandler):
                     # else redirect to panel
                     self.redirect("/admin/panel")
 
-    def oauth_security_system(self):
+    def is_user_connected(self):
         # get cookie
         account_connected_cookies = self.get_secure_cookie("account-connected-cookies")
         # if cookie is not None
@@ -108,11 +108,6 @@ class BasePage(tornado.web.RequestHandler):
                     # return True
                     return True
         # else return False
-        return False
-
-    def local_connexion_security(self):
-        if "192.168." in str(self.request.remote_ip) or str(self.request.remote_ip) == "127.0.0.1" or str(self.request.remote_ip) == "::1":
-            return True
         return False
 
     def get_accessing_info(self):

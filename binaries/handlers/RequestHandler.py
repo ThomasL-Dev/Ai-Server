@@ -64,7 +64,7 @@ class RequestHandler(HandlerObject, AiObject):
         # show request info in console
         self.__show_req_info(request)
         # send to discord
-        self.__kernel__.DiscordHandler.send_log("Request {} '{}' received".format(request.name, request.input), self.__kernel__.BootFile.get_value("discord_channel_log_request"))
+        self.__kernel__.DiscordHandler.send_log("Request {} '{}' received".format(request.name.capitalize(), request.input), self.__kernel__.BootFile.get_value("discord_channel_log_request"))
         # do the last request if asked
         if "encore" == request.input.lower():
             # then remove the 'again' request

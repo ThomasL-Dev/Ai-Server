@@ -3,15 +3,19 @@ from controllers.LgWebOsController import LgWebOsController
 # ========================================== FIN DES IMPORTS ========================================================= #
 
 
-class SkillTvChannelUp(SkillObject):
-    cmd = "tv_channelup"
+class SkillTvConnect(SkillObject):
 
-    utterance = ["chaine suivante"]
+    cmd = "tv_connect"
+
+    utterance = ["connecte à la télé", "connecte à la télévision"]
+
+
 
     def on_execute(self):
         ip = self.__kernel__.BootFile.get_value("lgwebos")
         controller = LgWebOsController(ip)
-        controller.channel_up()
+        controller._connect_tv()
+
 
 
 

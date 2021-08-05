@@ -1,6 +1,7 @@
 from binaries.processors.SkillProcessor import SkillProcessor
 from binaries.processors.NaturalLanguageProcessor import NaturalLanguageProcessor
 from binaries.obj.RequestObject import RequestObject
+from binaries.obj.SkillObject import SkillObject
 from binaries.obj.AiObject import AiObject
 # ========================================== FIN DES IMPORTS ========================================================= #
 
@@ -98,7 +99,7 @@ class RequestProcessor(AiObject):
         else:
             return None
 
-    def __search_skill(self) -> object:
+    def __search_skill(self) -> SkillObject:
         self.__console__.info("{} Searching Skill ...".format(self.__classname__))
         # itterate skills
         for skill_in_list in self.__kernel__.SkillHandler.SKILLS_LIST:
@@ -121,7 +122,7 @@ class RequestProcessor(AiObject):
 
         return None
 
-    def __search_skill_by_nlp(self, skill_in_list) -> object:
+    def __search_skill_by_nlp(self, skill_in_list) -> SkillObject:
         # itterate utterance
         for utterance in skill_in_list.utterance:
             # find equality by nl

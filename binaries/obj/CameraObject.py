@@ -41,6 +41,15 @@ class CameraObject(Thread, AiObject):
 
 
 
+    def __repr__(self):
+        return (f'{self.__class__.__name__}('
+                f'name={self._name!r}, '
+                f'index={self._index!r}, '
+                f'frame={self._live_frame!r}'
+                f')')
+
+
+
     def run(self):
         try:
             # running camera feed
@@ -93,37 +102,28 @@ class CameraObject(Thread, AiObject):
             try:
                 # if opencv access to camera
                 if self._camera is not None:
-
                     # getting if frame statut, frame
                     is_frame_grabbed, frame = self._camera.read()
-
                     # if frame statut is not None
                     if is_frame_grabbed:
-
                         # if frame is not none
                         if frame is not None:
-                            """
-                            Processing image here
-                            """
+                            # PROCESS IMAGE
                             # write date and hour on frame
                             frame = self.__write_datetime_on_frame(frame)
                             # save the frame in web img path
                             self.__save_live_frame(frame)
-
                             # show the frame for test
                             # self._show_frame(frame)
-
                         else:
                             continue
                         time.sleep(0.5)
-
                     else:
                         time.sleep(1.5)
                         continue
                 else:
                     break
-
-            except Exception as e:
+            except:
                 self.__console__.error("{} Video feed error, shutting down camera '{}'".format(self.__classname__, self._name))
                 self.stop()
 

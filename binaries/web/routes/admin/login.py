@@ -7,7 +7,7 @@ from binaries.web.obj.BasePage import BasePage
 class login(BasePage):
 
     def on_get(self):
-        if self.oauth_security_system():
+        if self.is_user_connected():
             self.redirect("/admin/panel")
         else:
             self.render("login.html", ia_name=self.kernel.ia_name)

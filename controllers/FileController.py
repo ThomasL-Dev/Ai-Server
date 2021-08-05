@@ -7,11 +7,15 @@ class FileController:
 
 
     @staticmethod
-    def create_file(path: str):
+    def create_file(path: str, data: str=None):
         if not FileController.if_file_exist(path):
             try:
                 # create file
                 with open(path, "w+") as file:
+                    # write data  when file is created if needed
+                    if data is not None:
+                        file.write(data)
+                    # close the file
                     file.close()
                 # making non-root perm folder
                 if "linux" in sys.platform:
@@ -51,3 +55,24 @@ class FileController:
             return True
         else:
             return False
+
+
+    @staticmethod
+    def write_file(path: str, data: str):
+        if FileController.if_file_exist(path):
+            with open(path, "w+") as file:
+                file.write(data)
+                file.close()
+        else:
+            FileController.create_file(path, data)
+
+
+    @staticmethod
+    def read_file(path: str):
+        if FileController.if_file_exist(path):
+            with open(path, "r+") as file:
+                data = file.readlines()
+                file.close()
+            return data
+        else:
+            raise Exception("File '{}' do not exist".format(path))

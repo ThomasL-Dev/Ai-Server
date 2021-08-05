@@ -31,18 +31,15 @@ class SkillProcessor(AiObject):
             # showing execute infos
             if ip is None and param is None:
                 self.__console__.info("{} Skill '{}' processed".format(self.__classname__, self.skill_name), color="green")
-
             elif ip is not None and param is not None:
                 self.__console__.info("{} Skill '{}' processed with ip '{}' & param '{}'".format(self.__classname__, self.skill_name, ip, param), color="green")
-
             elif ip is not None:
                 self.__console__.info("{} Skill '{}' processed with ip '{}'".format(self.__classname__, self.skill_name, ip), color="green")
-
             elif param is not None:
                 self.__console__.info("{} Skill '{}' processed with param '{}'".format(self.__classname__, self.skill_name, param), color="green")
 
         except Exception as e:
-            ReponseBuilder(self.__kernel__, self.sender, "Impossible d'éxécuté cette action")
+            ReponseBuilder(self.__kernel__, self.sender, "Impossible d'éxécuté cette action : {}".format(e))
             self.__console__.error("{} Error while executing Skill '{}' : {}".format(self.__classname__, self.skill_name, e))
 
 

@@ -57,9 +57,11 @@ class DeviceObject(Thread, AiObject):
 
     def run(self):
         # show connection infos
-        self.__console__.info("{} {}({}) Connected to server".format(self.__classname__, self._name, self._ip), color="green")
+        self.__console__.info("{} '{}' ({}) Connected to server".format(self.__classname__, self._name.capitalize(), self._ip), color="green")
+        # send to discord
+        self.__kernel__.DiscordHandler.send_log("'{}' ({}) connected".format(self.get_name().capitalize(), self.get_ip()), self.__kernel__.BootFile.get_value("discord_channel_log_device"))
         # running communication handler
-        self.__console__.info("{} Handling communication for {}({})".format(self.__classname__, self._name, self._ip))
+        self.__console__.info("{} Handling communication for '{}' ({})".format(self.__classname__, self._name.capitalize(), self._ip))
         # start the device data handling
         while self._connected_to_server:
             # if socket is not None
@@ -76,18 +78,20 @@ class DeviceObject(Thread, AiObject):
                             self.disconnect()
                         else:
                             # else read msg
-                            user_input = str(self._data_from_client)
+                            device_receiv = str(self._data_from_client)
 
-                            if "code:pass" in user_input:
-                                # checking code
-                                pass
+                            # DO CODE ACTION
+                            # RECEIVE PING
+                            if "code:ping" in device_receiv:
+                                # SEND PONG
+                                self._socket.send("code:{}".format("pong").encode("utf8"))
                             else:
                                 # Do a new request
-                                RequestBuilder(self.__kernel__, self._name, user_input)
+                                RequestBuilder(self.__kernel__, self._name, device_receiv)
 
                     except Exception as e:
                         self.disconnect()
-                time.sleep(0.5)
+                time.sleep(0.15)
             else:
                 self.__stop_handling()
         self.__close_socket()
@@ -143,7 +147,7 @@ class DeviceObject(Thread, AiObject):
             self._name = value
             # update in db
             self._database.update(what="name", new_value=value, target_ip=self._ip)
-            self.__console__.info("{} Name updated to '{}'".format(self.__classname__, prev_name, value))
+            self.__console__.info("{} Name updated to '{}'".format(self.__classname__, prev_name.capitalize(), value.capitalize()))
 
     def update_alias(self, value: str) -> None:
         # if value is not Null
@@ -154,17 +158,20 @@ class DeviceObject(Thread, AiObject):
             self._alias = value
             # update in db
             self._database.update(what="alias", new_value=value, target_ip=self._ip)
-            self.__console__.info("{} Alias updated to '{}'".format(self.__classname__, prev_alias, value))
+            self.__console__.info("{} Alias updated to '{}'".format(self.__classname__, prev_alias.capitalize(), value.capitalize()))
 
 
     def disconnect(self) -> None:
         # show disconnection info
-        self.__console__.info("{} {}({}) Disconnected from server".format(self.__classname__, self._name, self._ip), color="red")
+        self.__console__.info("{} '{}' ({}) Disconnected from server".format(self.__classname__, self._name.capitalize(), self._ip), color="red")
+        # send to discord
+        self.__kernel__.DiscordHandler.send_log("'{}' ({}) disconnected".format(self.get_name().capitalize(), self.get_ip()), self.__kernel__.BootFile.get_value("discord_channel_log_device"))
         # close the socket
         self.__close_socket()
         # stop handling new msg
         self.__stop_handling()
-
+        # remove obj from list
+        self.__remove_device_from_connected_list()
 
 
     def __get_mac(self) -> str:
@@ -208,3 +215,6 @@ class DeviceObject(Thread, AiObject):
         except select.error as err:
             self.__stop_handling()
             return
+
+    def __remove_device_from_connected_list(self) -> None:
+            self.__kernel__.DevicesHandler.DEVICES_CONNECTED_LIST.remove(self)

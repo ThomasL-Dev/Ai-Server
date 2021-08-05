@@ -13,7 +13,7 @@ class BootFile:
         # check if file exist
         if not FileController.if_file_exist(self._file_path):
             # if not exist create file with base infos
-            self._create_base_file()
+            self.__create_base_file()
 
 
 
@@ -21,7 +21,7 @@ class BootFile:
         # representation of the class
         output = f'{self.__class__.__name__}('
 
-        sections = self._get_all_sections_and_options()
+        sections = self.__get_all_sections_and_options()
         for section in sections:
             output += f'{section}, '
 
@@ -30,9 +30,34 @@ class BootFile:
         return output
 
 
+
+    def add_option(self, option_name: str, value: str):
+        # read the file
+        self.__read_boot_file()
+        # add a value to PROPERTIES
+        self._config['PROPERTIES'][option_name] = value
+        # write in file if found
+        self.__write_in_file()
+
+    def remove_option(self, section_name: str, option_name: str):
+        # read the file
+        self.__read_boot_file()
+        # add a value to PROPERTIES
+        self._config.remove_option(section_name, option_name)
+        # write in file if found
+        self.__write_in_file()
+
+    def remove_section(self, section_name: str):
+        # read the file
+        self.__read_boot_file()
+        # add a value to PROPERTIES
+        self._config.remove_section(section_name)
+        # write in file if found
+        self.__write_in_file()
+
     def update_value(self, option_name: str, new_value: str):
         # read the file
-        self._read_boot_file()
+        self.__read_boot_file()
         # get section
         section = self.get_section_by_option_name(option_name)
         # if section is not null
@@ -44,14 +69,13 @@ class BootFile:
                     # update the value
                     self._config[str(section.name)][option['name']] = new_value
                     # write in file if found
-                    self._write_in_file()
-
+                    self.__write_in_file()
 
     def get_value(self, option_name: str):
         # read the file
-        self._read_boot_file()
+        self.__read_boot_file()
         # get section
-        sections = self._get_all_sections_and_options()
+        sections = self.__get_all_sections_and_options()
         # itterate sections
         for section in sections:
             # itterate option in section
@@ -63,19 +87,17 @@ class BootFile:
         # else return none string
         return None
 
-
     def get_sections(self):
         # read the file
-        self._read_boot_file()
+        self.__read_boot_file()
         # get every sections
-        return self._get_all_sections_and_options()
-
+        return self.__get_all_sections_and_options()
 
     def get_section_by_option_name(self, option_name: str):
         # read the file
-        self._read_boot_file()
+        self.__read_boot_file()
         # get every sections
-        sections = self._get_all_sections_and_options()
+        sections = self.__get_all_sections_and_options()
         # itterate sections
         for section in sections:
             # if the option enter is egal to option name
@@ -88,7 +110,8 @@ class BootFile:
         return None
 
 
-    def _create_base_file(self):
+
+    def __create_base_file(self):
         # read the file
         self._config.read(self._file_path)
         # init sections and options
@@ -108,20 +131,20 @@ class BootFile:
             "pass_install_requierements": "false",
         }
         # wrtie in file
-        self._write_in_file()
+        self.__write_in_file()
 
 
-    def _get_all_sections_and_options(self):
+    def __get_all_sections_and_options(self):
         # init a list
         output = []
         # read the file
-        self._read_boot_file()
+        self.__read_boot_file()
         # get every sections
         sections = self._config.sections()
         # itterate sections
         for section in sections:
             # get every options in section
-            options = self._get_options_in_section(section)
+            options = self.__get_options_in_section(section)
             # create a new section object
             new_section = self.Section(section_name=section)
             # if the section object is not null and not alread in output list
@@ -142,7 +165,7 @@ class BootFile:
         # return the list
         return output
 
-    def _get_options_in_section(self, section_name: str):
+    def __get_options_in_section(self, section_name: str):
         try:
             # read the file
             self._config.read(self._file_path)
@@ -152,14 +175,14 @@ class BootFile:
             pass
 
 
-    def _read_boot_file(self):
+    def __read_boot_file(self):
         try:
             # read the .ini file
             self._config.read(self._file_path)
         except:
             pass
 
-    def _write_in_file(self):
+    def __write_in_file(self):
         # write in .ini file
         with open(self._file_path, "w+") as cfg_file:
             self._config.write(cfg_file)

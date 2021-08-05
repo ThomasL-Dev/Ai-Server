@@ -13,7 +13,7 @@ class SkillTvLaunchApp(SkillObject):
     need_param = True
 
     def on_execute(self):
-        ip = self._kernel.BootFile.get_value("lgwebos")
+        ip = self.__kernel__.BootFile.get_value("lgwebos")
         controller = LgWebOsController(ip)
         controller.launch_app(self.param)
 
